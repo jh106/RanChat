@@ -1,14 +1,11 @@
-import Nav from './Nav'
+import { Outlet } from "react-router-dom";
+import Nav from "./Nav";
 
-function Root() {
-  return (
-    <>
-      <Nav />
-      <h1>Root</h1>
-      {/* <chatting section> */}
-      {/* <footer> */}
-    </>
-  );
+export default function Root() {
+	return (
+		<>
+			<Nav />
+			<Outlet />
+		</>
+	);
 }
-
-export default Root;
