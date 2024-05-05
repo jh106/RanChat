@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     margin: 0;
 }
 
@@ -9,11 +10,10 @@ html, body {
     height: 100vh;
 }
 
-.nav-bar {
-    background-color: rgb(81, 77, 86);
+/* .nav-bar {
     width: 100%;
     height: 4em;
-}
+} */
 
 .content {
     background-color: lightgrey;
@@ -31,8 +31,9 @@ html, body {
     flex: 1;
     overflow: auto;
     width: 60%;
+    min-width: 720px;
     height: 100%;
-    padding: 1.5% 2%;
+    /* padding: 1.5% 2%; */
     margin: 0 auto;
     border: none;
     background-color: darkcyan;
@@ -40,13 +41,34 @@ html, body {
 
 .chat_main {
     display: flex;
+    flex-direction: column-reverse;
     flex: 1;
+    padding: 16px 16px 0 16px;
+}
+
+.chat_main p {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    max-height: 28px;
+    background-color: cornflowerblue;
+    margin: 12px;
+    padding: 8px;
+}
+
+.chat_main .right {
+    justify-content: right;
+}
+
+.chat_main .left {
+    justify-content: left;
 }
 
 .chat_input {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    padding: 24px;
+    padding-top: 0;
 }
 
 .chat_input input[type="text"] {
@@ -59,4 +81,35 @@ html, body {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
+}
+
+.nav {
+    list-style-type: none;
+    margin: 0;
+    /* padding: auto; */
+    overflow: hidden;
+    background-color: #333;
+    display: flex;
+    /* padding: 20px; */
+    font-weight: 300;
+    font-size: 14px;
+    box-sizing: border-box;
+    height: 4em;
+}
+
+
+.nav_link {
+    color: gray;
+    padding: 10px;
+    font-size: 24px;
+    font-weight: 300;
+    /* margin: 5px; */
+    border: none;
+    height: 100%;
+    cursor: pointer;
+    text-decoration-line: none;
+}
+
+.nav_link:hover {
+    color: white;
 }
