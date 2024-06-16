@@ -3,53 +3,50 @@ import useWebSocket, { ReadyState } from "react-use-websocket";
 import "../assets/app.css";
 
 export default function Chat() {
-	//Public API that will echo messages sent to it back to the client
-	const [socketUrl, setSocketUrl] = useState("wss://echo.websocket.org");
-	const [messageHistory, setMessageHistory] = useState<MessageEvent<any>[]>(
-		[]
+	const [inputValue, setInputValue] = useState("");
+	const [messages, setMessages] = useState<{ message: string; sender: string; }[]>([]);
+	const { sendMessage, lastMessage, readyState } = useWebSocket(
+		"ws://127.0.0.1:7156"
 	);
 
-	const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
+	const handleClick = useCallback(() => {
+		if (inputValue !== "") {
+			sendMessage(inputValue);
+			setMessages((prev) => [
+				...prev,
+				{ message: inputValue, sender: "me" },
+			]);
+			setInputValue("");
+		}
+	}, [inputValue]);
 
 	useEffect(() => {
 		if (lastMessage !== null) {
-			setMessageHistory((prev) => prev.concat(lastMessage));
+			setMessages((prev) => [
+				...prev,
+				{ message: lastMessage.data, sender: "server" },
+			]);
 		}
 	}, [lastMessage]);
-
-	const handleClickChangeSocketUrl = useCallback(
-		() => setSocketUrl("wss://demos.kaazing.com/echo"),
-		[]
-	);
-
-	const handleClickSendMessage = useCallback(() => sendMessage("Hello"), []);
-
-	const connectionStatus = {
-		[ReadyState.CONNECTING]: "Connecting",
-		[ReadyState.OPEN]: "Open",
-		[ReadyState.CLOSING]: "Closing",
-		[ReadyState.CLOSED]: "Closed",
-		[ReadyState.UNINSTANTIATED]: "Uninstantiated",
-	}[readyState];
 
 	return (
 		<div className="content">
 			<div className="chat_div">
 				<div className="chat_main">
-					<p className="left">left</p>
-					<p className="right">right</p>
-					<ul>
-						{messageHistory.map((message, idx) => (
-							<span key={idx}>
-								{message ? message.data : null}
-							</span>
-						))}
-					</ul>
+					{messages.map((msg, index) => (
+						<p key={index} className={msg.sender === "me" ? 'right' : 'left'}>
+							{msg.message}
+						</p>
+					))}
 				</div>
 				<div className="chat_input">
-					<input type="text" />
+					<input
+						type="text"
+						value={inputValue}
+						onChange={(e) => setInputValue(e.target.value)}
+					/>
 					<div className="chat_send_Button">
-						<button onClick={handleClickSendMessage}>send</button>
+						<button onClick={handleClick}>send</button>
 					</div>
 				</div>
 			</div>
