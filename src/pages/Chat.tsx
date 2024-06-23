@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
+import Button from "@mui/material/Button";
+import { TextField } from "@mui/material";
 import "../assets/app.css";
 
 export default function Chat() {
@@ -16,6 +18,7 @@ export default function Chat() {
 				...prev,
 				{ message: inputValue, sender: "me" },
 			]);
+			console.log(messages);
 			setInputValue("");
 		}
 	}, [inputValue]);
@@ -40,13 +43,13 @@ export default function Chat() {
 					))}
 				</div>
 				<div className="chat_input">
-					<input
-						type="text"
+					<TextField
+						multiline hiddenLabel fullWidth
 						value={inputValue}
 						onChange={(e) => setInputValue(e.target.value)}
 					/>
-					<div className="chat_send_Button">
-						<button onClick={handleClick}>send</button>
+					<div className="chat_send_button">
+						<Button variant="contained" onClick={handleClick}>send</Button>
 					</div>
 				</div>
 			</div>
