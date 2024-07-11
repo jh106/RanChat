@@ -49,9 +49,10 @@ body {
 .chat_main p {
     display: flex;
     flex-direction: row;
-    flex: 1;
-    max-height: 28px;
-    min-width: 8vw;
+    flex: 0;
+    align-items: center;
+    word-break: break-all;
+    min-width: 0vw;
     max-width: 20vw;
     background-color: #333;
     color: white;
@@ -70,7 +71,7 @@ body {
     justify-content: left;
 }
 
-.chat_input {
+.chat_input form {
     display: flex;
     flex-direction: row;
     padding: 24px;
